@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HexaGenPHP: Construyendo Software Escalable | Hexagen Ecosystem</title>
+  <meta name="description" content="Libro oficial de HexaGenPHP: Vertical Slice Architecture, Hexagonal Design y Reactividad Moderna sin SPAs por Raul Alejandro Baez Camarillo.">
+  <meta name="author" content="Raul Alejandro Baez Camarillo">
+  <meta name="theme-color" content="#090D16">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rbaezc.github.io/mybooks/">
+  <meta property="og:title" content="HexaGenPHP: Construyendo Software Escalable | Hexagen Ecosystem">
+  <meta property="og:description" content="Vertical Slice Architecture, Hexagonal Design y Reactividad Moderna sin SPAs. Descarga gratuita en PDF.">
+  <meta property="og:image" content="assets/images/hexagenphp-cover.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://rbaezc.github.io/mybooks/">
+  <meta property="twitter:title" content="HexaGenPHP: Construyendo Software Escalable">
+  <meta property="twitter:description" content="Vertical Slice Architecture, Hexagonal Design y Reactividad Moderna sin SPAs. Descarga gratuita en PDF.">
+  <meta property="twitter:image" content="assets/images/hexagenphp-cover.jpg">
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Canvas & Glow Orbs -->
+  <canvas id="ambient-canvas"></canvas>
+  <div class="bg-glow-orb bg-orb-1"></div>
+  <div class="bg-glow-orb bg-orb-2"></div>
+  <div class="bg-glow-orb bg-orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#inicio" class="brand-logo">
+        <svg class="brand-icon" viewBox="0 0 100 100" fill="none">
+          <polygon points="50,6 88,28 88,72 50,94 12,72 12,28" stroke="url(#navHexGrad)" stroke-width="7" fill="#090D16"/>
+          <rect x="30" y="32" width="9" height="36" rx="2" fill="#06B6D4"/>
+          <rect x="44" y="24" width="12" height="52" rx="3" fill="#6366F1"/>
+          <rect x="61" y="32" width="9" height="36" rx="2" fill="#A855F7"/>
+          <defs>
+            <linearGradient id="navHexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6366F1"/>
+              <stop offset="50%" stop-color="#06B6D4"/>
+              <stop offset="100%" stop-color="#A855F7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span>HEXAGEN<span style="color: var(--accent-cyan);">BOOKS</span></span>
+        <span class="brand-badge">ECOSYSTEM</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+          <li><a href="#pilares" class="nav-link">Arquitectura</a></li>
+          <li><a href="#laboratorio" class="nav-link">Laboratorio VSA</a></li>
+          <li><a href="#capitulos" class="nav-link">Capítulos (14)</a></li>
+          <li><a href="#descarga" class="nav-link">Descargar</a></li>
+          <li><a href="#autor" class="nav-link">Autor</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://github.com/rbaezc/mybooks" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" title="Ver en GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          <span>GitHub</span>
+        </a>
+        <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-sm btn-download-action">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>PDF Gratis</span>
+        </a>
+        <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Abrir Menú">☰</button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="mobileMenu" class="mobile-menu">
+      <a href="#inicio" class="nav-link">Inicio</a>
+      <a href="#pilares" class="nav-link">Arquitectura</a>
+      <a href="#laboratorio" class="nav-link">Laboratorio VSA</a>
+      <a href="#capitulos" class="nav-link">Capítulos</a>
+      <a href="#descarga" class="nav-link">Descargar PDF</a>
+      <a href="#autor" class="nav-link">Autor</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge-container">
+          <span class="pulse-dot"></span>
+          <span>LIBRO OFICIAL • HEXAGEN ECOSYSTEM 2026</span>
+        </div>
+
+        <h1 class="hero-title">
+          Construyendo Software Escalable con <br>
+          <span class="gradient-accent">HexaGenPHP</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Domina <strong>Vertical Slice Architecture</strong>, <strong>Diseño Hexagonal Pragmático</strong> y <strong>Live Slices con HTMX</strong> para construir aplicaciones web ultrarrápidas y robustas sin la sobrecarga de las SPAs tradicionales.
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag-chip">⚡ PHP 8.3+</span>
+          <span class="tag-chip">🛡️ AES-256-GCM Crypto</span>
+          <span class="tag-chip">🧩 Vertical Slice Architecture</span>
+          <span class="tag-chip">🔄 HTMX Live Slices</span>
+          <span class="tag-chip">📡 Domain Events & CQRS</span>
+          <span class="tag-chip">🏢 Multi-Tenancy Enterprise</span>
+        </div>
+
+        <div class="hero-cta">
+          <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-glow btn-download-action">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Descargar PDF Completo (1.1 MB)</span>
+          </a>
+
+          <a href="#" class="btn btn-secondary btn-open-preview" data-pdf-url="PDFs/hexagenphp-guia-maestra.pdf">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span>Vista Previa Online</span>
+          </a>
+
+          <button class="btn btn-secondary btn-copy-link" title="Copiar enlace al libro">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <span>Compartir</span>
+          </button>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-value">14</span>
+            <span class="stat-label">Capítulos de Ingeniería</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">Código para Producción</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">0</span>
+            <span class="stat-label">Sobrecarga SPA</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">Gratis</span>
+            <span class="stat-label">Open Knowledge</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Book Showcase -->
+      <div class="hero-book-showcase">
+        <div class="book-3d-wrapper" title="Mueve el cursor para girar el libro en 3D">
+          <div class="book-3d">
+            <div class="book-front">
+              <img src="assets/images/hexagenphp-cover.jpg" alt="Portada de HexaGenPHP por Raul Alejandro Baez Camarillo" loading="eager">
+            </div>
+            <div class="book-spine"></div>
+            <div class="book-pages"></div>
+          </div>
+          <div class="book-badge-floating">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span>PDF Oficial • 14 Capítulos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architectural Pillars Section -->
+  <section id="pilares" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Fundamentos del Ecosistema</span>
+        <h2 class="section-title">Pilares de Ingeniería de HexaGenPHP</h2>
+        <p class="section-desc">
+          Elimina la sobrecarga de los monolitos acoplados y la complejidad innecesaria de microservicios prematuros con una arquitectura sólida y elegante.
+        </p>
+      </div>
+
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon-box">📐</div>
+          <h3 class="pillar-title">Vertical Slice Architecture</h3>
+          <p class="pillar-text">
+            Organiza el sistema en torno a casos de uso y características de negocio reales en lugar de capas técnicas horizontales dispersas. Máxima cohesión, cero acoplamiento.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">🛡️</div>
+          <h3 class="pillar-title">Hexagonal Pragmático</h3>
+          <p class="pillar-text">
+            Puertos y adaptadores sin sobreingeniería. El núcleo de negocio permanece 100% puro e inmune a cambios en bases de datos, APIs de terceros o librerías externas.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">⚡</div>
+          <h3 class="pillar-title">Live Slices con HTMX</h3>
+          <p class="pillar-text">
+            Experiencia de usuario fluida y reactiva server-driven sin necesidad de duplicar modelos en React/Vue ni gestionar estados complejos en el frontend.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">🔐</div>
+          <h3 class="pillar-title">Blindaje AES-256-GCM</h3>
+          <p class="pillar-text">
+            Protección criptográfica autenticada del estado del componente en el cliente. Seguridad Zero-Trust contra manipulación indebida de parámetros e inyecciones.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">📡</div>
+          <h3 class="pillar-title">Eventos de Dominio & CQRS</h3>
+          <p class="pillar-text">
+            Bus de eventos asíncrono y desacoplado para auditoría, notificaciones y sincronización transaccional con patrones de segregación de comandos y consultas.
+          </p>
+        </div>
+
+        <div class="pillar-card">
+          <div class="pillar-icon-box">🏢</div>
+          <h3 class="pillar-title">Enterprise Multi-Tenancy</h3>
+          <p class="pillar-text">
+            Aislamiento estricto de datos por tenant, control de acceso basado en roles (RBAC) granular y pipeline de CI/CD dockerizado listo para alta concurrencia.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Architecture Comparison Lab -->
+  <section id="laboratorio" class="section" style="background: rgba(4, 8, 16, 0.6);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Laboratorio Interactivo</span>
+        <h2 class="section-title">Monolito Horizontal vs. Vertical Slice</h2>
+        <p class="section-desc">
+          Compara en tiempo real cómo cambia la estructura de código, la claridad y el mantenimiento entre el MVC tradicional y la arquitectura HexaGenPHP.
+        </p>
+      </div>
+
+      <div class="architecture-lab">
+        <div class="lab-tabs">
+          <button class="lab-tab-btn active" data-tab="vsa">✨ HexaGenPHP (Vertical Slice)</button>
+          <button class="lab-tab-btn" data-tab="mvc">⚠️ MVC Clásico (Fat Controllers)</button>
+        </div>
+
+        <div class="lab-content-grid">
+          <div class="code-window">
+            <div class="code-header">
+              <div class="code-dots">
+                <span class="code-dot dot-red"></span>
+                <span class="code-dot dot-yellow"></span>
+                <span class="code-dot dot-green"></span>
+              </div>
+              <span id="labCodeTitle" class="code-title">app/Slices/Orders/CreateOrder/CreateOrderHandler.php</span>
+            </div>
+            <div class="code-body">
+              <pre><code id="labCodeContent"></code></pre>
+            </div>
+          </div>
+
+          <div class="diagram-panel">
+            <h4 style="font-size: 1.15rem; margin-bottom: 1rem; color: #38bdf8;">Flujo Arquitectónico</h4>
+            <div id="labDiagramFlow">
+              <!-- Dynamically rendered steps -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Table of Contents Section -->
+  <section id="capitulos" class="section chapters-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Estructura del Libro</span>
+        <h2 class="section-title">Índice Completo de los 14 Capítulos</h2>
+        <p class="section-desc">
+          Explora los contenidos detallados de cada capítulo. Utiliza el buscador rápido para localizar cualquier tema arquitectónico.
+        </p>
+      </div>
+
+      <!-- Search Input -->
+      <div class="chapters-search-bar">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="chapterSearch" class="search-input" placeholder="Buscar por tema (ej. HTMX, AES-256, Repositorios, Docker, CQRS)..." autocomplete="off">
+        </div>
+      </div>
+
+
+      <div class="chapter-part-group">
+        <div class="part-header">
+          <span class="part-badge">Parte I</span>
+          <h3 class="part-title">Parte I: Fundamentos y Filosofía Arquitectónica</h3>
+        </div>
+        <div class="chapters-list">\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 01</span>
+                <span class="chapter-title-text">La Crisis del Monolito Horizontal y la Promesa de VSA</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Análisis profundo de la deuda técnica generada por el patrón MVC horizontal clásico: Fat Models, controladores inmanejables y dispersión de lógica. Introducción formal a Vertical Slice Architecture (VSA) y el principio de cambio aislado.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">MVC Tradicional vs VSA</span><span class="topic-pill">Baja Cohesión</span><span class="topic-pill">Alto Acoplamiento</span><span class="topic-pill">Cambio Aislado</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 02</span>
+                <span class="chapter-title-text">Arquitectura Hexagonal Pragmática en PHP 8.3+</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Implementación limpia de Puertos y Adaptadores adaptada a PHP moderno. Cómo aislar el núcleo de dominio de la infraestructura sin caer en la sobre-ingeniería ni crear capas innecesarias.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Puertos y Adaptadores</span><span class="topic-pill">Inversión de Dependencias</span><span class="topic-pill">Dominio Puro</span><span class="topic-pill">PHP 8.3 Types</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 03</span>
+                <span class="chapter-title-text">Anatomía del Framework HexaGenPHP</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Diseño interno del motor de HexaGenPHP: Service Container compilado, pipeline de middleware PSR-15 ultrarrápido, enrutador automático de slices por atributos nativos de PHP y ciclo de vida HTTP.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Core Engine</span><span class="topic-pill">Middleware Pipeline</span><span class="topic-pill">Atributos Nativos PHP</span><span class="topic-pill">Container DI</span>
+              </div>
+            </div>
+          </div>\n
+        </div>
+      </div>\n
+      <div class="chapter-part-group">
+        <div class="part-header">
+          <span class="part-badge">Parte II</span>
+          <h3 class="part-title">Parte II: Desarrollo Core y Vertical Slices</h3>
+        </div>
+        <div class="chapters-list">\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 04</span>
+                <span class="chapter-title-text">Instalación, Tooling y el CLI Generador</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Configuración del entorno de desarrollo, uso del potente CLI hexagen para generar slices automáticos, entidades, migraciones y tests con scaffolding instantáneo de alta productividad.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">HexaGen CLI</span><span class="topic-pill">Scaffolding Automático</span><span class="topic-pill">Composer Tooling</span><span class="topic-pill">Entorno Dev</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 05</span>
+                <span class="chapter-title-text">Modelado del Dominio: Entities, Value Objects e Inmutabilidad</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Patrones avanzados de Domain-Driven Design (DDD): Value Objects autocontenidos con validación intrínseca, propiedades readonly, entidades ricas con invariantes de negocio y manejo tipado.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">DDD</span><span class="topic-pill">Value Objects</span><span class="topic-pill">Readonly Properties</span><span class="topic-pill">Invariantes de Dominio</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 06</span>
+                <span class="chapter-title-text">El Ciclo de Vida de un Slice: DTOs, Validadores y Handlers</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Desglose del flujo de ejecución en una rebanada vertical: mapeo de Request a DTO tipado, validación declarativa con atributos, Handlers de responsabilidad única y respuestas estructuradas.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Command / Query DTOs</span><span class="topic-pill">Single Responsibility</span><span class="topic-pill">Validation Attributes</span><span class="topic-pill">Handler Pattern</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 07</span>
+                <span class="chapter-title-text">Persistencia Desacoplada, Repositorios y Transaccionalidad</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Estrategias de persistencia desacoplada utilizando interfaces de repositorio en el dominio e implementaciones optimizadas con PDO nativo o Doctrine. Gestión de transacciones ACID y Unit of Work.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Repository Pattern</span><span class="topic-pill">Transacciones ACID</span><span class="topic-pill">Unit of Work</span><span class="topic-pill">PDO / SQL Optimizado</span>
+              </div>
+            </div>
+          </div>\n
+        </div>
+      </div>\n
+      <div class="chapter-part-group">
+        <div class="part-header">
+          <span class="part-badge">Parte III</span>
+          <h3 class="part-title">Parte III: Reactividad, Seguridad y Eventos Avanzados</h3>
+        </div>
+        <div class="chapters-list">\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 08</span>
+                <span class="chapter-title-text">Live Slices y UI Reactiva con HTMX</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Creación de interfaces dinámicas y en tiempo real sin salir de PHP. Uso de Live Slices impulsadas por HTMX, swaps parciales del DOM, eventos en cliente y eliminación de dependencias complejas.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">HTMX</span><span class="topic-pill">Live Slices</span><span class="topic-pill">DOM Swapping</span><span class="topic-pill">Zero-SPA Overhead</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 09</span>
+                <span class="chapter-title-text">Criptografía en el Cliente: Blindaje AES-256-GCM del Estado</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Seguridad de nivel militar en el cliente: cómo HexaGenPHP cifra y firma criptográficamente el estado del componente mediante AES-256-GCM y OpenSSL, impidiendo la alteración de parámetros.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">AES-256-GCM</span><span class="topic-pill">OpenSSL</span><span class="topic-pill">Zero-Trust State</span><span class="topic-pill">Anti-Tampering</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 10</span>
+                <span class="chapter-title-text">Arquitectura Guiada por Eventos (Domain Events y Event Bus)</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Desacoplamiento total de efectos secundarios mediante Eventos de Dominio. Publicación sincrónica y asincrónica con Event Bus, integración con colas y mensajería en segundo plano.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Domain Events</span><span class="topic-pill">Event Bus</span><span class="topic-pill">Colas Asíncronas</span><span class="topic-pill">Event-Driven Architecture</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 11</span>
+                <span class="chapter-title-text">APIs Híbridas: Unificando Web y Mobile en un solo Slice</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Cómo un mismo Vertical Slice responde automáticamente con fragmentos HTML enriquecidos para la web o con JSON tipado para aplicaciones móviles (Flutter/iOS/Android) y servicios de integración.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Content Negotiation</span><span class="topic-pill">Hybrid Slices</span><span class="topic-pill">Mobile JSON APIs</span><span class="topic-pill">Single Codebase</span>
+              </div>
+            </div>
+          </div>\n
+        </div>
+      </div>\n
+      <div class="chapter-part-group">
+        <div class="part-header">
+          <span class="part-badge">Parte IV</span>
+          <h3 class="part-title">Parte IV: Producción, Escala y Proyecto Enterprise</h3>
+        </div>
+        <div class="chapters-list">\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 12</span>
+                <span class="chapter-title-text">Multi-Tenancy y Seguridad Avanzada (RBAC y Permisos)</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Implementación de multi-inquilino seguro a nivel de base de datos y esquema, control de acceso basado en roles (RBAC) granular, políticas de autorización dinámicas y protección contra brechas.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Multi-Tenancy</span><span class="topic-pill">RBAC</span><span class="topic-pill">Aislamiento de Inquilinos</span><span class="topic-pill">Auditoría de Seguridad</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 13</span>
+                <span class="chapter-title-text">Proyecto Completo de Extremo a Extremo (SaaS Transaccional)</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Construcción paso a paso de un SaaS real en producción: suscripciones transaccionales, panel de control en tiempo real, facturación con pasarelas de pago y gestión de eventos de extremo a extremo.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">SaaS Enterprise</span><span class="topic-pill">Pasarelas de Pago</span><span class="topic-pill">Flujos Transaccionales</span><span class="topic-pill">End-to-End Real</span>
+              </div>
+            </div>
+          </div>\n
+          <div class="chapter-card">
+            <div class="chapter-card-header">
+              <div class="chapter-header-left">
+                <span class="chapter-number">Cap. 14</span>
+                <span class="chapter-title-text">Testing Automatizado, Dockerización, CI/CD y Rendimiento</span>
+              </div>
+              <span class="chapter-toggle-icon">▼</span>
+            </div>
+            <div class="chapter-card-body">
+              <p class="chapter-summary">Estrategias de pruebas unitarias y de integración para slices con Pest y PHPUnit, contenedor Docker multi-stage optimizado para producción, pipeline de CI/CD en GitHub Actions y afinamiento de OPcache/JIT.</p>
+              <div class="chapter-topics-list">
+                <span class="topic-pill">Pest / PHPUnit</span><span class="topic-pill">Docker Multi-Stage</span><span class="topic-pill">GitHub Actions CI/CD</span><span class="topic-pill">OPcache & JIT Tuning</span>
+              </div>
+            </div>
+          </div>\n
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Master Download Section -->
+  <section id="descarga" class="download-cta-section">
+    <div class="container">
+      <div class="download-cta-box">
+        <div>
+          <span class="section-tag" style="color: #67e8f9;">DESCARGA DIRECTA INMEDIATA</span>
+          <h2 class="download-cta-title">Obtén tu copia gratuita en PDF</h2>
+          <p class="download-cta-text">
+            Descarga la guía maestra completa de <strong>HexaGenPHP</strong> en formato PDF de alta resolución, lista para lectura en pantallas o impresión técnica.
+          </p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-glow btn-download-action" style="padding: 0.95rem 2rem; font-size: 1.05rem;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span>Descargar hexagenphp-guia-maestra.pdf</span>
+            </a>
+
+            <a href="#" class="btn btn-secondary btn-open-preview" data-pdf-url="PDFs/hexagenphp-guia-maestra.pdf">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <span>Leer en el Navegador</span>
+            </a>
+          </div>
+
+          <p style="font-size: 0.85rem; color: var(--text-muted);">
+            ✓ Descarga 100% directa sin registros obligatorios ni intermediarios.
+          </p>
+        </div>
+
+        <div class="download-specs-card">
+          <h4 style="font-size: 1.05rem; margin-bottom: 1rem; color: #a5b4fc;">Ficha Técnica del Documento</h4>
+          <div class="specs-row">
+            <span class="specs-label">Archivo:</span>
+            <span class="specs-value">hexagenphp-guia-maestra.pdf</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-label">Tamaño:</span>
+            <span class="specs-value">1.13 MB</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-label">Capítulos:</span>
+            <span class="specs-value">14 Capítulos Completos</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-label">Idioma:</span>
+            <span class="specs-value">Español</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-label">Autor:</span>
+            <span class="specs-value">Raul Alejandro Baez Camarillo</span>
+          </div>
+          <div class="specs-row">
+            <span class="specs-label">Licencia:</span>
+            <span class="specs-value">Open Knowledge / VortexSolutions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hexagen Ecosystem Roadmap -->
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ecosistema en Expansión</span>
+        <h2 class="section-title">Próximos Libros del Hexagen Ecosystem</h2>
+        <p class="section-desc">
+          Continuamos documentando la vanguardia en arquitectura de software, sistemas distribuidos y seguridad.
+        </p>
+      </div>
+
+      <div class="roadmap-grid">
+        <div class="roadmap-card">
+          <span class="roadmap-status">En Desarrollo</span>
+          <h3 class="roadmap-title">HexaGen Live Slices & HTMX Avanzado</h3>
+          <p class="roadmap-desc">
+            Patrones de diseño reactivo profundo, optimizaciones de streaming con SSE y WebSockets, y gestión de micro-interacciones de alto rendimiento.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="roadmap-status planned">Planificado</span>
+          <h3 class="roadmap-title">Event-Driven Architecture & Slices Distribuidos</h3>
+          <p class="roadmap-desc">
+            Transición de monolitos modulares VSA a microservicios basados en eventos, Kafka, RabbitMQ y consistencia eventual sin perder la elegancia arquitectónica.
+          </p>
+        </div>
+
+        <div class="roadmap-card">
+          <span class="roadmap-status planned">Planificado</span>
+          <h3 class="roadmap-title">Criptografía de Estado & Seguridad Zero-Trust</h3>
+          <p class="roadmap-desc">
+            Blindaje integral de aplicaciones web modernas, rotación de llaves, firmas ED25519 y arquitectura defensiva para entornos de misión crítica.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Section -->
+  <section id="autor" class="author-section">
+    <div class="container">
+      <div class="author-card">
+        <div class="author-avatar">
+          RB
+        </div>
+        <div class="author-info">
+          <h3>Raul Alejandro Baez Camarillo</h3>
+          <p class="author-role">Software Architect & Creador de VortexSolutions / Hexagen Ecosystem</p>
+          <p class="author-bio">
+            Especialista en arquitectura de software de alta concurrencia, sistemas transaccionales y diseño modular. Apasionado por simplificar el desarrollo web moderno eliminando la sobrecarga innecesaria y devolviendo la velocidad y el disfrute a la ingeniería de software con PHP moderno.
+          </p>
+          <div class="author-socials">
+            <a href="https://github.com/rbaezc" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+              </svg>
+              <span>GitHub @rbaezc</span>
+            </a>
+            <a href="https://github.com/rbaezc/mybooks" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+              <span>⭐ Repositorio del Proyecto</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PDF Reader Modal -->
+  <div id="pdfModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span class="modal-title">Lector PDF: HexaGenPHP Guía Maestra</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-sm btn-download-action">
+            <span>Descargar PDF</span>
+          </a>
+          <button id="closeModalBtn" class="modal-close-btn" aria-label="Cerrar modal">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <iframe id="pdfPreviewFrame" src="" title="Visor PDF HexaGenPHP"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#inicio" class="brand-logo">
+            <svg class="brand-icon" viewBox="0 0 100 100" fill="none">
+              <polygon points="50,6 88,28 88,72 50,94 12,72 12,28" stroke="url(#footHexGrad)" stroke-width="7" fill="#090D16"/>
+              <rect x="30" y="32" width="9" height="36" rx="2" fill="#06B6D4"/>
+              <rect x="44" y="24" width="12" height="52" rx="3" fill="#6366F1"/>
+              <rect x="61" y="32" width="9" height="36" rx="2" fill="#A855F7"/>
+              <defs>
+                <linearGradient id="footHexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#6366F1"/>
+                  <stop offset="50%" stop-color="#06B6D4"/>
+                  <stop offset="100%" stop-color="#A855F7"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span>HEXAGEN<span style="color: var(--accent-cyan);">BOOKS</span></span>
+          </a>
+          <p>
+            Portal oficial de distribución de libros técnicos y recursos de arquitectura de software para el ecosistema Hexagen.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#pilares">Pilares Arquitectónicos</a></li>
+            <li><a href="#laboratorio">Laboratorio VSA</a></li>
+            <li><a href="#capitulos">Índice de Capítulos</a></li>
+            <li><a href="#descarga">Descargas</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Recursos & Enlaces</h4>
+          <ul class="footer-links">
+            <li><a href="https://github.com/rbaezc/mybooks" target="_blank" rel="noopener noreferrer">Repositorio en GitHub</a></li>
+            <li><a href="PDFs/hexagenphp-guia-maestra.pdf" download>PDF Directo</a></li>
+            <li><a href="https://github.com/rbaezc" target="_blank" rel="noopener noreferrer">Perfil de Raul Alejandro Baez</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Hexagen Ecosystem &bull; VortexSolutions &bull; Raul Alejandro Baez Camarillo.
+        </div>
+        <div>
+          Diseñado para desarrolladores y arquitectos de software modernos.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Back to Top Button -->
+  <button id="backToTop" class="back-to-top" aria-label="Volver arriba">↑</button>
+
+  <!-- Script Engine -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

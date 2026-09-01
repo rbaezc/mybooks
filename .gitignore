@@ -1,0 +1,12 @@
+﻿# Source markdown and manuscript files
+hexagen_php_book/
+Epubs/
+_book/
+
+# Build scripts
+build.py
+
+# System and OS files
+.DS_Store
+Thumbs.db
+*.log
