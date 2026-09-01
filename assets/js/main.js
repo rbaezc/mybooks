@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    HEXAGEN ECOSYSTEM - INTERACTIVE MULTI-BOOK JAVASCRIPT ENGINE
    ========================================================================== */
 
@@ -278,7 +278,16 @@ function initBooksCatalog() {
 }
 
 /* --------------------------------------------------------------------------
-   4. PDF Preview Modal & Download Tracker
+   4. Analytics & Event Tracking Helper (Google Analytics GA4)
+   -------------------------------------------------------------------------- */
+function trackAnalyticsEvent(eventName, params = {}) {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. PDF Preview Modal & Download Tracker
    -------------------------------------------------------------------------- */
 function initPdfModal() {
   const modal = document.getElementById('pdfModal');
@@ -300,6 +309,13 @@ function initPdfModal() {
       }
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
+
+      // Track preview event in GA4
+      trackAnalyticsEvent('preview_book', {
+        event_category: 'Engagement',
+        book_title: title,
+        file_url: pdfUrl
+      });
     };
   });
 
@@ -327,7 +343,7 @@ function initPdfModal() {
 }
 
 /* --------------------------------------------------------------------------
-   5. Toast Notifications
+   6. Toast Notifications & Download Tracking
    -------------------------------------------------------------------------- */
 function initToast() {
   let container = document.getElementById('toastContainer');
@@ -357,13 +373,24 @@ function initToast() {
       const url = window.location.href.split('#')[0];
       navigator.clipboard.writeText(url).then(() => {
         showToast('¡Enlace a la biblioteca copiado al portapapeles!', '🔗');
+        trackAnalyticsEvent('share_link', { method: 'clipboard' });
       });
     });
   });
 
   document.querySelectorAll('.btn-download-action').forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      const href = btn.getAttribute('href') || 'PDFs/hexagenphp-guia-maestra.pdf';
+      const downloadName = btn.getAttribute('download') || 'hexagenphp-guia-maestra.pdf';
       showToast('Iniciando descarga del libro en PDF...', '📥');
+
+      // Track download event in GA4
+      trackAnalyticsEvent('download_book', {
+        event_category: 'Downloads',
+        file_name: downloadName,
+        file_url: href,
+        value: 1
+      });
     });
   });
 }
