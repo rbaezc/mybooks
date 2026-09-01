@@ -1,13 +1,12 @@
-﻿# 📚 Hexagen Ecosystem — Biblioteca de Libros & Architecture Hub
+﻿# 📚 Hexagen Ecosystem — Biblioteca Oficial de Libros
 
 <div align="center">
 
 ![HexaGenPHP Cover](assets/images/hexagenphp-cover.jpg)
 
-### 🌐 **[Visitar la Biblioteca & Descargar Libros (GitHub Pages)](https://rbaezc.github.io/mybooks/)**
+### 🌐 **[Visitar el Sitio Web & Descargar Libros (GitHub Pages)](https://rbaezc.github.io/mybooks/)**
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-22c55e?style=for-the-badge&logo=github)](https://rbaezc.github.io/mybooks/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![GitHub Pages](https://img.shields.io/badge/Sitio_Web-Online-22c55e?style=for-the-badge&logo=github)](https://rbaezc.github.io/mybooks/)
 [![PHP 8.3+](https://img.shields.io/badge/PHP-8.3+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![Architecture: VSA](https://img.shields.io/badge/Architecture-Vertical_Slice-6366F1?style=for-the-badge)](https://rbaezc.github.io/mybooks/#pilares)
 
@@ -15,13 +14,33 @@
 
 ---
 
-## 📖 Acerca de este Portal
+## 📖 Acerca de este Repositorio
 
-Portal web interactivo y catálogo oficial para la distribución de libros técnicos y recursos de arquitectura de software del **Hexagen Ecosystem**, desarrollados por **Raul Alejandro Baez Camarillo** ([@rbaezc](https://github.com/rbaezc)).
+Repositorio y portal oficial para la publicación y descarga gratuita de las obras técnicas de arquitectura de software del **Hexagen Ecosystem**, escritas por **Raul Alejandro Baez Camarillo** ([@rbaezc](https://github.com/rbaezc)).
+
+Aquí encontrarás guías prácticas y completas de ingeniería orientadas a resolver la deuda técnica en el desarrollo web moderno, explorando patrones de alta cohesión, aislamiento de dominio y reactividad server-driven.
 
 ---
 
-## 📚 Catálogo de Libros del Ecosistema
+## 🌟 Libro Disponible
+
+### **Construyendo Software Escalable con HexaGenPHP**
+* **Subtítulo:** *Vertical Slice Architecture, Hexagonal Design y Reactividad Moderna sin SPAs*
+* **Autor:** Raul Alejandro Baez Camarillo
+* **Formato:** PDF (Alta resolución para lectura digital e impresión)
+* **Descarga directa:** [📥 `PDFs/hexagenphp-guia-maestra.pdf`](PDFs/hexagenphp-guia-maestra.pdf)
+
+#### Puntos Clave del Libro:
+* **Vertical Slice Architecture (VSA):** Organización del código por casos de uso reales de negocio en lugar de capas técnicas horizontales dispersas (*eliminando los Fat Models y Fat Controllers*).
+* **Diseño Hexagonal Pragmático:** Puertos y adaptadores limpios para mantener el núcleo de dominio 100% puro e independiente.
+* **Live Slices con HTMX:** Reactividad server-rendered moderna sin la sobrecarga de mantener dos bases de código separadas (PHP + SPA).
+* **Blindaje Criptográfico AES-256-GCM:** Seguridad Zero-Trust con estado de componente cifrado y firmado en cliente.
+* **Domain Events & CQRS:** Desacoplamiento transaccional y escalabilidad asíncrona.
+* **Caso Práctico Real:** Construcción de un SaaS transaccional de extremo a extremo listo para producción con Docker y CI/CD.
+
+---
+
+## 📚 Catálogo del Ecosistema
 
 | Título | Estado | Categoría | Descarga |
 | :--- | :--- | :--- | :--- |
@@ -32,57 +51,17 @@ Portal web interactivo y catálogo oficial para la distribución de libros técn
 
 ---
 
-## 💡 ¿Cómo agregar un nuevo libro a la biblioteca?
-
-El portal está construido sobre una arquitectura basada en datos (`assets/js/books-data.js`), lo que permite agregar nuevos libros en **3 sencillos pasos**:
-
-1. **Guarda el archivo PDF** en la carpeta `PDFs/` (por ejemplo: `PDFs/mi-nuevo-libro.pdf`).
-2. *(Opcional)* **Guarda la portada** en `assets/images/` (por ejemplo: `assets/images/mi-nuevo-libro-cover.jpg`).
-3. **Registra el libro** en [`assets/js/books-data.js`](assets/js/books-data.js) añadiendo un objeto al arreglo `HEXAGEN_BOOKS`:
-
-```javascript
-{
-  id: "mi-nuevo-libro",
-  title: "Título de Tu Nuevo Libro",
-  subtitle: "Subtítulo descriptivo",
-  author: "Raul Alejandro Baez Camarillo",
-  status: "available", // "available" | "in-development" | "planned"
-  category: "distributed", // "php-architecture" | "distributed" | "reactive" | "security"
-  categoryLabel: "Sistemas Distribuidos",
-  badge: "🔥 Disponible Ahora",
-  cover: "assets/images/mi-nuevo-libro-cover.jpg",
-  pdfUrl: "PDFs/mi-nuevo-libro.pdf",
-  pdfFilename: "mi-nuevo-libro.pdf",
-  pdfSize: "2.4 MB",
-  pages: "16 Capítulos",
-  year: "2026",
-  language: "Español",
-  tags: ["Sistemas Distribuidos", "Event-Driven", "Kafka"],
-  description: "Descripción de la obra...",
-  parts: [ ... ] // Índice de capítulos (opcional)
-}
-```
-
-> ⚡ **Automático:** La tarjeta en el catálogo, los filtros por categoría, el buscador en tiempo real, el explorador de capítulos y el botón de descarga se generarán de inmediato sin necesidad de editar HTML.
-
----
-
-## 🚀 Despliegue en GitHub Pages
-
-1. Haz push a la rama `main` del repositorio `https://github.com/rbaezc/mybooks.git`.
-2. En GitHub ve a **Settings** → **Pages**.
-3. En **Source**, selecciona **Deploy from a branch**.
-4. En **Branch**, selecciona `main` y la carpeta `/ (root)`.
-5. El sitio estará disponible en **`https://rbaezc.github.io/mybooks/`**.
-
----
-
-## 👨‍💻 Autor
+## 👨‍💻 Autor & Contacto
 
 **Raul Alejandro Baez Camarillo**  
-Software Architect & Creador de Hexagen Ecosystem / VortexSolutions  
-* GitHub: [@rbaezc](https://github.com/rbaezc)
+*Software Architect & Creador del Ecosistema Hexagen / VortexSolutions*  
+* Perfil de GitHub: [@rbaezc](https://github.com/rbaezc)
+* Repositorio oficial: [https://github.com/rbaezc/mybooks](https://github.com/rbaezc/mybooks)
 
 ---
 
-&copy; 2026 Hexagen Ecosystem &bull; VortexSolutions.
+## ⚖️ Derechos de Autor y Licencia
+
+Todos los libros, diagramas, textos y contenidos técnicos disponibles en este repositorio son propiedad de **Raul Alejandro Baez Camarillo** y el proyecto **VortexSolutions**. Se distribuyen de forma abierta y gratuita para la comunidad de desarrolladores y arquitectos de software con fines de aprendizaje, formación y consulta técnica.
+
+&copy; 2026 Raul Alejandro Baez Camarillo &bull; VortexSolutions &bull; Hexagen Ecosystem. Todos los derechos reservados.
