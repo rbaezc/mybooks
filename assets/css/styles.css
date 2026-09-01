@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    HEXAGEN ECOSYSTEM - BOOKS PORTAL STYLESHEET
    Design System: Deep Obsidian, Electric Indigo, Neon Cyan & Violet Glow
    ========================================================================== */
@@ -346,7 +346,13 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 0.25rem 0.5rem;
 }
+
+.mobile-menu {
+  display: none;
+}
+
 
 /* Hero Section */
 .hero {
