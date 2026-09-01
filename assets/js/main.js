@@ -1,10 +1,11 @@
 ﻿/* ==========================================================================
-   HEXAGEN ECOSYSTEM - INTERACTIVE JAVASCRIPT ENGINE
+   HEXAGEN ECOSYSTEM - INTERACTIVE MULTI-BOOK JAVASCRIPT ENGINE
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
   initAmbientCanvas();
   init3DBookTilt();
+  initBooksCatalog();
   initChapterExplorer();
   initArchitectureLab();
   initPdfModal();
@@ -89,7 +90,6 @@ function initAmbientCanvas() {
   function render() {
     ctx.clearRect(0, 0, width, height);
 
-    // Draw connecting lines between nearby particles
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
@@ -152,54 +152,296 @@ function init3DBookTilt() {
 }
 
 /* --------------------------------------------------------------------------
-   3. Chapter Explorer (Accordion & Real-Time Filter)
+   3. Multi-Book Dynamic Catalog & Category Filtering
    -------------------------------------------------------------------------- */
-function initChapterExplorer() {
-  const searchInput = document.getElementById('chapterSearch');
-  const chapterCards = document.querySelectorAll('.chapter-card');
-  const partGroups = document.querySelectorAll('.chapter-part-group');
+let activeCategory = 'all';
+let currentActiveBookId = 'hexagenphp-guia-maestra';
 
-  // Accordion toggle
-  chapterCards.forEach((card) => {
-    const header = card.querySelector('.chapter-card-header');
-    header.addEventListener('click', () => {
-      const isOpen = card.classList.contains('open');
-      
-      // Close other open cards in the same group optionally or leave multi-open
-      card.classList.toggle('open');
+function initBooksCatalog() {
+  const catalogGrid = document.getElementById('catalogGrid');
+  const filterBtns = document.querySelectorAll('.catalog-filter-btn');
+  const globalSearchInput = document.getElementById('globalBookSearch');
+
+  if (!catalogGrid || typeof HEXAGEN_BOOKS === 'undefined') return;
+
+  function renderCatalog(booksToRender) {
+    catalogGrid.innerHTML = '';
+
+    if (!booksToRender.length) {
+      catalogGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--text-muted);">
+          <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">🔍 No se encontraron libros con ese criterio.</p>
+          <p style="font-size: 0.9rem;">Prueba con otro término de búsqueda o selecciona otra categoría.</p>
+        </div>
+      `;
+      return;
+    }
+
+    booksToRender.forEach((book) => {
+      const isAvailable = book.status === 'available';
+      const statusClass = isAvailable
+        ? 'status-available'
+        : book.status === 'in-development'
+        ? 'status-development'
+        : 'status-planned';
+
+      const card = document.createElement('div');
+      card.className = 'book-card';
+      card.setAttribute('data-book-id', book.id);
+
+      const tagsHtml = book.tags.slice(0, 4).map((t) => `<span class="tag-chip">${t}</span>`).join('');
+
+      card.innerHTML = `
+        <div class="book-card-header">
+          <img src="${book.cover}" alt="Portada de ${book.title}" class="book-card-cover-img" loading="lazy">
+          <span class="book-status-pill ${statusClass}">${book.badge}</span>
+        </div>
+        <div class="book-card-body">
+          <span class="book-category-tag">${book.categoryLabel}</span>
+          <h3 class="book-card-title">${book.title}</h3>
+          <p class="book-card-subtitle">${book.subtitle}</p>
+
+          <div class="book-card-specs">
+            <span class="spec-badge">📄 ${book.pages}</span>
+            <span class="spec-badge">💾 ${book.pdfSize}</span>
+            <span class="spec-badge">🌐 ${book.language}</span>
+          </div>
+
+          <div class="book-card-tags">
+            ${tagsHtml}
+          </div>
+
+          <div class="book-card-actions">
+            ${
+              isAvailable
+                ? `
+                <a href="${book.pdfUrl}" download="${book.pdfFilename}" class="btn btn-primary btn-sm btn-download-action">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  <span>Descargar PDF</span>
+                </a>
+                <button class="btn btn-secondary btn-sm btn-select-book" data-book-id="${book.id}">
+                  <span>Ver Índice</span>
+                </button>
+              `
+                : `
+                <button class="btn btn-secondary btn-sm" style="opacity: 0.8; cursor: default;" disabled>
+                  <span>${book.badge}</span>
+                </button>
+                <button class="btn btn-secondary btn-sm btn-select-book" data-book-id="${book.id}">
+                  <span>Detalles</span>
+                </button>
+              `
+            }
+          </div>
+        </div>
+      `;
+
+      catalogGrid.appendChild(card);
+    });
+
+    // Attach click listeners to "Ver Índice" buttons
+    catalogGrid.querySelectorAll('.btn-select-book').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const bookId = btn.getAttribute('data-book-id');
+        selectBookForExplorer(bookId);
+      });
+    });
+  }
+
+  function filterBooks() {
+    let filtered = HEXAGEN_BOOKS;
+
+    if (activeCategory !== 'all') {
+      filtered = filtered.filter((b) => b.category === activeCategory);
+    }
+
+    if (globalSearchInput) {
+      const query = globalSearchInput.value.toLowerCase().trim();
+      if (query) {
+        filtered = filtered.filter((b) => {
+          const inTitle = b.title.toLowerCase().includes(query);
+          const inSubtitle = b.subtitle.toLowerCase().includes(query);
+          const inTags = b.tags.some((t) => t.toLowerCase().includes(query));
+          const inDesc = b.description.toLowerCase().includes(query);
+          const inChapters = b.parts.some((p) =>
+            p.items.some(
+              (it) =>
+                it.title.toLowerCase().includes(query) ||
+                it.summary.toLowerCase().includes(query) ||
+                it.tags.some((tg) => tg.toLowerCase().includes(query))
+            )
+          );
+          return inTitle || inSubtitle || inTags || inDesc || inChapters;
+        });
+      }
+    }
+
+    renderCatalog(filtered);
+  }
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCategory = btn.getAttribute('data-category');
+      filterBooks();
     });
   });
 
-  // Search filter
+  if (globalSearchInput) {
+    globalSearchInput.addEventListener('input', filterBooks);
+  }
+
+  renderCatalog(HEXAGEN_BOOKS);
+}
+
+/* --------------------------------------------------------------------------
+   4. Dynamic Chapter Explorer (Supports switching between books)
+   -------------------------------------------------------------------------- */
+function selectBookForExplorer(bookId) {
+  const book = HEXAGEN_BOOKS.find((b) => b.id === bookId);
+  if (!book) return;
+
+  currentActiveBookId = bookId;
+
+  const selector = document.getElementById('bookExplorerSelect');
+  if (selector) selector.value = bookId;
+
+  renderActiveBookChapters(book);
+
+  const explorerSection = document.getElementById('capitulos');
+  if (explorerSection) {
+    explorerSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function renderActiveBookChapters(book) {
+  const container = document.getElementById('dynamicChaptersContainer');
+  const activeBookTitle = document.getElementById('activeBookExplorerTitle');
+  const activeBookDesc = document.getElementById('activeBookExplorerDesc');
+  const searchInput = document.getElementById('chapterSearch');
+
+  if (activeBookTitle) activeBookTitle.textContent = book.title;
+  if (activeBookDesc) activeBookDesc.textContent = book.subtitle;
+  if (searchInput) searchInput.value = '';
+
+  if (!container) return;
+
+  if (!book.parts || !book.parts.length) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 4rem 2rem; background: var(--bg-card); border-radius: var(--radius-lg); border: 1px dashed rgba(148, 163, 184, 0.3);">
+        <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">✍️</span>
+        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: #ffffff;">Temario en Proceso de Redacción</h3>
+        <p style="color: var(--text-secondary); max-width: 550px; margin: 0 auto 1.5rem;">
+          Este libro se encuentra actualmente en desarrollo dentro del <strong>Hexagen Ecosystem</strong>. Los capítulos detallados se publicarán próximamente.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
+          ${book.highlights.map((h) => `<span class="topic-pill">✨ ${h}</span>`).join('')}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  book.parts.forEach((group) => {
+    html += `
+      <div class="chapter-part-group">
+        <div class="part-header">
+          <span class="part-badge">${group.badge}</span>
+          <h3 class="part-title">${group.part}</h3>
+        </div>
+        <div class="chapters-list">
+    `;
+
+    group.items.forEach((item) => {
+      const tagsHtml = item.tags.map((t) => `<span class="topic-pill">${t}</span>`).join('');
+      html += `
+        <div class="chapter-card">
+          <div class="chapter-card-header">
+            <div class="chapter-header-left">
+              <span class="chapter-number">${item.num}</span>
+              <span class="chapter-title-text">${item.title}</span>
+            </div>
+            <span class="chapter-toggle-icon">▼</span>
+          </div>
+          <div class="chapter-card-body">
+            <p class="chapter-summary">${item.summary}</p>
+            <div class="chapter-topics-list">
+              ${tagsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    html += `
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+
+  // Attach accordion handlers
+  container.querySelectorAll('.chapter-card').forEach((card) => {
+    const header = card.querySelector('.chapter-card-header');
+    header.addEventListener('click', () => {
+      card.classList.toggle('open');
+    });
+  });
+}
+
+function initChapterExplorer() {
+  const selector = document.getElementById('bookExplorerSelect');
+  const searchInput = document.getElementById('chapterSearch');
+
+  if (selector && typeof HEXAGEN_BOOKS !== 'undefined') {
+    selector.innerHTML = HEXAGEN_BOOKS.map(
+      (b) => `<option value="${b.id}">${b.title} (${b.badge})</option>`
+    ).join('');
+
+    selector.addEventListener('change', (e) => {
+      selectBookForExplorer(e.target.value);
+    });
+  }
+
+  const defaultBook = HEXAGEN_BOOKS.find((b) => b.id === currentActiveBookId) || HEXAGEN_BOOKS[0];
+  if (defaultBook) {
+    renderActiveBookChapters(defaultBook);
+  }
+
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value.toLowerCase().trim();
+      const container = document.getElementById('dynamicChaptersContainer');
+      if (!container) return;
+
+      const partGroups = container.querySelectorAll('.chapter-part-group');
 
       partGroups.forEach((group) => {
-        let hasVisibleChapters = false;
+        let hasVisible = false;
         const cards = group.querySelectorAll('.chapter-card');
 
         cards.forEach((card) => {
           const text = card.textContent.toLowerCase();
           if (text.includes(query)) {
             card.style.display = 'block';
-            hasVisibleChapters = true;
-            if (query.length > 2) {
-              card.classList.add('open');
-            }
+            hasVisible = true;
+            if (query.length > 2) card.classList.add('open');
           } else {
             card.style.display = 'none';
           }
         });
 
-        group.style.display = hasVisibleChapters ? 'block' : 'none';
+        group.style.display = hasVisible ? 'block' : 'none';
       });
     });
   }
 }
 
 /* --------------------------------------------------------------------------
-   4. Architecture Lab (Interactive Tabs)
+   5. Architecture Lab (Interactive Tabs)
    -------------------------------------------------------------------------- */
 const architectureData = {
   vsa: {
@@ -317,12 +559,11 @@ function initArchitectureLab() {
     });
   });
 
-  // Default load
   updateLab('vsa');
 }
 
 /* --------------------------------------------------------------------------
-   5. PDF Preview Modal & Download Tracker
+   6. PDF Preview Modal & Download Tracker
    -------------------------------------------------------------------------- */
 function initPdfModal() {
   const modal = document.getElementById('pdfModal');
@@ -368,13 +609,16 @@ function initPdfModal() {
 }
 
 /* --------------------------------------------------------------------------
-   6. Toast Notifications
+   7. Toast Notifications
    -------------------------------------------------------------------------- */
 function initToast() {
-  const container = document.createElement('div');
-  container.className = 'toast-container';
-  container.id = 'toastContainer';
-  document.body.appendChild(container);
+  let container = document.getElementById('toastContainer');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    container.id = 'toastContainer';
+    document.body.appendChild(container);
+  }
 
   window.showToast = function (message, icon = '✓') {
     const toast = document.createElement('div');
@@ -390,26 +634,24 @@ function initToast() {
     }, 3500);
   };
 
-  // Attach to copy link buttons
   document.querySelectorAll('.btn-copy-link').forEach((btn) => {
     btn.addEventListener('click', () => {
       const url = window.location.href.split('#')[0];
       navigator.clipboard.writeText(url).then(() => {
-        showToast('¡Enlace al libro copiado al portapapeles!', '🔗');
+        showToast('¡Enlace a la biblioteca copiado al portapapeles!', '🔗');
       });
     });
   });
 
-  // Attach to download buttons
   document.querySelectorAll('.btn-download-action').forEach((btn) => {
     btn.addEventListener('click', () => {
-      showToast('Iniciando descarga de HexaGenPHP Guía Maestra...', '📥');
+      showToast('Iniciando descarga del libro en PDF...', '📥');
     });
   });
 }
 
 /* --------------------------------------------------------------------------
-   7. Back to Top Button
+   8. Back to Top Button
    -------------------------------------------------------------------------- */
 function initBackToTop() {
   const btn = document.getElementById('backToTop');
@@ -429,7 +671,7 @@ function initBackToTop() {
 }
 
 /* --------------------------------------------------------------------------
-   8. Mobile Navigation Menu
+   9. Mobile Navigation Menu
    -------------------------------------------------------------------------- */
 function initMobileMenu() {
   const btn = document.getElementById('mobileMenuBtn');
