@@ -62,9 +62,6 @@
           <li><a href="#inicio" class="nav-link active">Inicio</a></li>
           <li><a href="#catalogo" class="nav-link">Catálogo de Libros</a></li>
           <li><a href="#pilares" class="nav-link">Arquitectura</a></li>
-          <li><a href="#laboratorio" class="nav-link">Laboratorio VSA</a></li>
-          <li><a href="#capitulos" class="nav-link">Capítulos</a></li>
-          <li><a href="#descarga" class="nav-link">Descargar</a></li>
           <li><a href="#autor" class="nav-link">Autor</a></li>
         </ul>
       </nav>
@@ -93,9 +90,6 @@
       <a href="#inicio" class="nav-link">Inicio</a>
       <a href="#catalogo" class="nav-link">Catálogo de Libros</a>
       <a href="#pilares" class="nav-link">Arquitectura</a>
-      <a href="#laboratorio" class="nav-link">Laboratorio VSA</a>
-      <a href="#capitulos" class="nav-link">Capítulos</a>
-      <a href="#descarga" class="nav-link">Descargar PDF</a>
       <a href="#autor" class="nav-link">Autor</a>
     </div>
   </header>
@@ -204,7 +198,7 @@
         <span class="section-tag">Colección Completa</span>
         <h2 class="section-title">Catálogo de Libros Hexagen</h2>
         <p class="section-desc">
-          Selecciona un libro para descargarlo en PDF, explorar su índice interactivo de capítulos o conocer los próximos lanzamientos.
+          Selecciona un libro para descargarlo en PDF, explorar su información o conocer los próximos lanzamientos.
         </p>
       </div>
 
@@ -212,7 +206,7 @@
       <div class="chapters-search-bar" style="margin-bottom: 1.5rem;">
         <div class="search-input-wrapper">
           <span class="search-icon">🔍</span>
-          <input type="text" id="globalBookSearch" class="search-input" placeholder="Buscar por título, tecnología, tema o capítulo (ej. PHP, HTMX, Eventos, Cripto)..." autocomplete="off">
+          <input type="text" id="globalBookSearch" class="search-input" placeholder="Buscar por título, tecnología o tema (ej. PHP, HTMX, Eventos, Cripto)..." autocomplete="off">
         </div>
       </div>
 
@@ -294,143 +288,6 @@
     </div>
   </section>
 
-  <!-- Interactive Architecture Comparison Lab -->
-  <section id="laboratorio" class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Laboratorio Interactivo</span>
-        <h2 class="section-title">Monolito Horizontal vs. Vertical Slice</h2>
-        <p class="section-desc">
-          Compara en tiempo real cómo cambia la estructura de código, la claridad y el mantenimiento entre el MVC tradicional y la arquitectura HexaGenPHP.
-        </p>
-      </div>
-
-      <div class="architecture-lab">
-        <div class="lab-tabs">
-          <button class="lab-tab-btn active" data-tab="vsa">✨ HexaGenPHP (Vertical Slice)</button>
-          <button class="lab-tab-btn" data-tab="mvc">⚠️ MVC Clásico (Fat Controllers)</button>
-        </div>
-
-        <div class="lab-content-grid">
-          <div class="code-window">
-            <div class="code-header">
-              <div class="code-dots">
-                <span class="code-dot dot-red"></span>
-                <span class="code-dot dot-yellow"></span>
-                <span class="code-dot dot-green"></span>
-              </div>
-              <span id="labCodeTitle" class="code-title">app/Slices/Orders/CreateOrder/CreateOrderHandler.php</span>
-            </div>
-            <div class="code-body">
-              <pre><code id="labCodeContent"></code></pre>
-            </div>
-          </div>
-
-          <div class="diagram-panel">
-            <h4 style="font-size: 1.15rem; margin-bottom: 1rem; color: #38bdf8;">Flujo Arquitectónico</h4>
-            <div id="labDiagramFlow"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dynamic Chapter Explorer Section -->
-  <section id="capitulos" class="section chapters-section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Explorador de Contenidos</span>
-        <h2 id="activeBookExplorerTitle" class="section-title">Índice de Capítulos</h2>
-        <p id="activeBookExplorerDesc" class="section-desc">
-          Explora los contenidos detallados del libro seleccionado. Utiliza el selector o el buscador rápido para localizar cualquier tema.
-        </p>
-      </div>
-
-      <!-- Book Selector Dropdown -->
-      <div class="book-selector-bar">
-        <span style="color: var(--accent-cyan); font-weight: 700; font-size: 0.9rem;">📖 LIBRO:</span>
-        <select id="bookExplorerSelect" class="book-selector-select" aria-label="Seleccionar libro"></select>
-      </div>
-
-      <!-- Search Input -->
-      <div class="chapters-search-bar">
-        <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
-          <input type="text" id="chapterSearch" class="search-input" placeholder="Buscar por tema en este libro (ej. HTMX, AES-256, Repositorios, Docker)..." autocomplete="off">
-        </div>
-      </div>
-
-      <!-- Dynamic Chapters Container -->
-      <div id="dynamicChaptersContainer"></div>
-    </div>
-  </section>
-
-  <!-- Master Download Section -->
-  <section id="descarga" class="download-cta-section">
-    <div class="container">
-      <div class="download-cta-box">
-        <div>
-          <span class="section-tag" style="color: #67e8f9;">DESCARGA DIRECTA INMEDIATA</span>
-          <h2 class="download-cta-title">Obtén tu copia gratuita en PDF</h2>
-          <p class="download-cta-text">
-            Descarga la guía maestra completa de <strong>HexaGenPHP</strong> en formato PDF de alta resolución, lista para lectura en pantallas o impresión técnica.
-          </p>
-
-          <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-            <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-glow btn-download-action" style="padding: 0.95rem 2rem; font-size: 1.05rem;">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              <span>Descargar hexagenphp-guia-maestra.pdf</span>
-            </a>
-
-            <a href="#" class="btn btn-secondary btn-open-preview" data-pdf-url="PDFs/hexagenphp-guia-maestra.pdf">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                <circle cx="12" cy="12" r="3"/>
-              </svg>
-              <span>Leer en el Navegador</span>
-            </a>
-          </div>
-
-          <p style="font-size: 0.85rem; color: var(--text-muted);">
-            ✓ Descarga 100% directa sin registros obligatorios ni intermediarios.
-          </p>
-        </div>
-
-        <div class="download-specs-card">
-          <h4 style="font-size: 1.05rem; margin-bottom: 1rem; color: #a5b4fc;">Ficha Técnica del Documento</h4>
-          <div class="specs-row">
-            <span class="specs-label">Archivo:</span>
-            <span class="specs-value">hexagenphp-guia-maestra.pdf</span>
-          </div>
-          <div class="specs-row">
-            <span class="specs-label">Tamaño:</span>
-            <span class="specs-value">1.13 MB</span>
-          </div>
-          <div class="specs-row">
-            <span class="specs-label">Capítulos:</span>
-            <span class="specs-value">14 Capítulos Completos</span>
-          </div>
-          <div class="specs-row">
-            <span class="specs-label">Idioma:</span>
-            <span class="specs-value">Español</span>
-          </div>
-          <div class="specs-row">
-            <span class="specs-label">Autor:</span>
-            <span class="specs-value">Raul Alejandro Baez Camarillo</span>
-          </div>
-          <div class="specs-row">
-            <span class="specs-label">Licencia:</span>
-            <span class="specs-value">Open Knowledge / VortexSolutions</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Author Section -->
   <section id="autor" class="author-section">
     <div class="container">
@@ -472,7 +329,7 @@
             <line x1="16" y1="17" x2="8" y2="17"/>
             <polyline points="10 9 9 9 8 9"/>
           </svg>
-          <span class="modal-title">Lector PDF Hexagen</span>
+          <span id="modalPdfTitle" class="modal-title">Lector PDF Hexagen</span>
         </div>
         <div style="display: flex; align-items: center; gap: 1rem;">
           <a href="PDFs/hexagenphp-guia-maestra.pdf" download="hexagenphp-guia-maestra.pdf" class="btn btn-primary btn-sm btn-download-action">
@@ -518,10 +375,8 @@
           <ul class="footer-links">
             <li><a href="#inicio">Inicio</a></li>
             <li><a href="#catalogo">Catálogo de Libros</a></li>
-            <li><a href="#pilares">Pilares Arquitectónicos</a></li>
-            <li><a href="#laboratorio">Laboratorio VSA</a></li>
-            <li><a href="#capitulos">Capítulos</a></li>
-            <li><a href="#descarga">Descargas</a></li>
+            <li><a href="#pilares">Pilares del Ecosistema</a></li>
+            <li><a href="#autor">Autor</a></li>
           </ul>
         </div>
 
