@@ -1,10 +1,14 @@
-﻿# Source markdown and manuscript files
+# Source markdown and manuscript files
 hexagen_php_book/
+hexagen_microservices_es/
+hexagen_microservices_en/
 Epubs/
 _book/
 
-# Build scripts
+# Build and helper scripts
 build.py
+*.py
+*.ps1
 
 # System and OS files
 .DS_Store

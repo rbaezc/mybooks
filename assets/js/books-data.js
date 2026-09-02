@@ -1,4 +1,4 @@
-﻿/* ==========================================================================
+/* ==========================================================================
    HEXAGEN ECOSYSTEM - BOOKS DATA REGISTRY
    Centralized database for all present and future books in the ecosystem.
    To add a new book, simply add a new object to the HEXAGEN_BOOKS array!
@@ -142,29 +142,58 @@ const HEXAGEN_BOOKS = [
     ]
   },
   {
-    id: "hexagen-distributed",
+    id: "hexagen-microservicios-es",
     title: "HexaGen: Microservicios y Slices Distribuidos",
     subtitle: "Event-Driven Architecture, CQRS a Escala y Consistencia Eventual",
     author: "Raul Alejandro Baez Camarillo",
-    status: "in-development",
+    status: "available",
     category: "distributed",
     categoryLabel: "Sistemas Distribuidos",
-    badge: "⚡ En Desarrollo",
-    cover: "assets/images/favicon.svg",
-    pdfUrl: null,
-    pdfFilename: null,
-    pdfSize: "En Redacción",
-    pages: "12 Capítulos",
+    badge: "🔥 Disponible Ahora",
+    cover: "assets/images/hexagen-microservicios-cover.jpg",
+    pdfUrl: "PDFs/hexagen-microservicios-es.pdf",
+    pdfFilename: "hexagen-microservicios-es.pdf",
+    epubUrl: "Epubs/hexagen-microservicios-es.epub",
+    pdfSize: "1.00 MB",
+    pages: "12 Capítulos Completos",
     year: "2026",
     language: "Español",
     isFeatured: false,
-    tags: ["Sistemas Distribuidos", "Event-Driven", "Kafka", "RabbitMQ", "CQRS", "Outbox Pattern", "Sagas"],
-    description: "Estrategias avanzadas para transformar un monolito modular VSA en una topología distribuida basada en eventos, garantizando transaccionalidad con Sagas y Outbox Pattern sin perder la simplicidad.",
+    tags: ["Sistemas Distribuidos", "Event-Driven", "Kafka", "RabbitMQ", "CQRS a Escala", "Outbox Pattern", "Sagas", "gRPC", "Zero-Trust"],
+    description: "La guía definitiva para transformar monolitos VSA en microservicios autónomos y resilientes basados en eventos. Domina CQRS a escala, el patrón Transactional Outbox, Sagas orquestadas, gRPC, Event Sourcing y observabilidad distribuida con OpenTelemetry.",
     highlights: [
       "Transición controlada de Slices locales a Slices asíncronos distribuidos",
       "Garantía de entrega y consistencia con Transactional Outbox Pattern",
-      "Orquestación y Coreografía de Sagas transaccionales",
-      "Observabilidad distribuida con OpenTelemetry y Jaeger"
+      "Orquestación y Coreografía de Sagas transaccionales con compensación",
+      "Observabilidad distribuida con OpenTelemetry, Jaeger y Prometheus"
+    ],
+    parts: []
+  },
+  {
+    id: "hexagen-microservices-en",
+    title: "HexaGen: Microservices and Distributed Slices",
+    subtitle: "Event-Driven Architecture, CQRS at Scale, and Eventual Consistency",
+    author: "Raul Alejandro Baez Camarillo",
+    status: "available",
+    category: "distributed",
+    categoryLabel: "Distributed Systems",
+    badge: "🔥 Available Now",
+    cover: "assets/images/hexagen-microservices-en-cover.jpg",
+    pdfUrl: "PDFs/hexagen-microservices-en.pdf",
+    pdfFilename: "hexagen-microservices-en.pdf",
+    epubUrl: "Epubs/hexagen-microservices-en.epub",
+    pdfSize: "1.00 MB",
+    pages: "12 Complete Chapters",
+    year: "2026",
+    language: "English",
+    isFeatured: false,
+    tags: ["Distributed Systems", "Event-Driven", "Apache Kafka", "RabbitMQ", "CQRS at Scale", "Outbox Pattern", "Sagas", "gRPC", "Zero-Trust"],
+    description: "The authoritative guide to decomposing VSA monoliths into autonomous, event-driven microservices. Master CQRS at scale, the Transactional Outbox pattern, orchestrated Sagas, gRPC, Event Sourcing, and distributed observability with OpenTelemetry.",
+    highlights: [
+      "Controlled transition from monolithic Vertical Slices to asynchronous distributed slices",
+      "Guaranteed At-Least-Once delivery with the Transactional Outbox Pattern",
+      "Distributed transaction orchestration and choreography with compensating Sagas",
+      "End-to-end distributed observability with OpenTelemetry, Jaeger, and Prometheus"
     ],
     parts: []
   },

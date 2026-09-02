@@ -1,4 +1,4 @@
-﻿# 📚 Hexagen Ecosystem — Biblioteca Oficial de Libros
+# 📚 Hexagen Ecosystem — Biblioteca Oficial de Libros
 
 <div align="center">
 
@@ -42,12 +42,13 @@ Aquí encontrarás guías prácticas y completas de ingeniería orientadas a res
 
 ## 📚 Catálogo del Ecosistema
 
-| Título | Estado | Categoría | Descarga |
+| Título | Idioma | Estado | Descarga |
 | :--- | :--- | :--- | :--- |
-| **Construyendo Software Escalable con HexaGenPHP** | 🔥 **Disponible** | PHP & Arquitectura | [📥 Descargar PDF](PDFs/hexagenphp-guia-maestra.pdf) |
-| **HexaGen: Microservicios y Slices Distribuidos** | ⚡ *En Desarrollo* | Sistemas Distribuidos | *Próximamente* |
-| **Live Slices & HTMX Reactivo Avanzado** | ✨ *En Desarrollo* | Reactividad & HTMX | *Próximamente* |
-| **Criptografía de Estado & Seguridad Zero-Trust** | 🛡️ *Planificado* | Seguridad & Cripto | *Próximamente* |
+| **Construyendo Software Escalable con HexaGenPHP** | 🇪🇸 Español | 🔥 **Disponible** | [📥 Descargar PDF](PDFs/hexagenphp-guia-maestra.pdf) |
+| **HexaGen: Microservicios y Slices Distribuidos** | 🇪🇸 Español | 🔥 **Disponible** | [📥 Descargar PDF](PDFs/hexagen-microservicios-es.pdf) |
+| **HexaGen: Microservices and Distributed Slices** | 🇺🇸 English | 🔥 **Available** | [📥 Download PDF](PDFs/hexagen-microservices-en.pdf) |
+| **Live Slices & HTMX Reactivo Avanzado** | 🇪🇸 Español | ✨ *En Desarrollo* | *Próximamente* |
+| **Criptografía de Estado & Seguridad Zero-Trust** | 🇪🇸 Español | 🛡️ *Planificado* | *Próximamente* |
 
 ---
 
